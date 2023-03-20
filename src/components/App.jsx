@@ -7,9 +7,11 @@ import { useEffect } from 'react';
 import { selectError, selectIsLoading } from '../redux/selectors/selectors';
 import { ThreeDots } from 'react-loader-spinner';
 import { fetchContacts } from "../redux/operations";
+import { getAllContacts } from 'redux/selectors/selectors';
 
 
 export const App = () => {
+  const contacts = useSelector(getAllContacts);
   const error = useSelector(selectError);
   const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
@@ -34,7 +36,8 @@ export const App = () => {
         <ContactForm />
         <h2 className={css.title}>Contacts</h2>
         <Filter />
-        {isLoading&&!error?<div className={css.loader}><ThreeDots /></div>:<ContactList /> }
+        {isLoading&&!error?<div className={css.loader}><ThreeDots /></div>:<ContactList />}
+        {!contacts.length && <p className={css.messageUser}>There are no contacts in the Phonebook</p>}
       </div>
     </div>
   );
